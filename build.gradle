@@ -1,0 +1,69 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.0.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "org.sonarqube"
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+eclipse {
+    classpath {
+        containers "org.springsource.ide.eclipse.gradle.classpathcontainer"
+    }
+}
+
+jar {
+    baseName = "spring-boot-hello-world"
+    version =  "0.0.1-SNAPSHOT"
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.projectlombok:lombok')
+
+    //SpringSecurity
+    implementation('org.springframework.boot:spring-boot-starter-security')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testCompile("org.junit.jupiter:junit-jupiter-params:5.3.2")
+}
+
+
+/**
+
+ mainClassName = 'com.example.demo.CircleCiTestApplication'
+ def executableBaseName = "CircleCiTestApplication"
+
+ task executableJar(type: Jar, dependsOn: jar)  {
+ archiveName = "${executableBaseName}.jar"
+ manifest {
+ attributes 'Main-Class' : mainClassName
+ }
+
+ from configurations.compile.collect {it.isDirectory() ? it : zipTree(it)}
+ from "$buildDir/classes/main"
+ from "$buildDir/resources/main"
+ }
+ */
